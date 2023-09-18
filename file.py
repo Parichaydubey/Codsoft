@@ -1,90 +1,87 @@
-import tkinter
-import tkinter.messagebox
-import pickle
+# How to make a calculator in python using tkinter
+import tkinter as tk
+field_text=""
+def add_to_field(sth):
+    global field_text
+    field_text=field_text+str(sth)
+    field.delete("1.0","end")
+    field.insert("1.0",field_text)
+def calculate():
+    global field_text
+    result=str(eval(field_text))
+    field.delete("1.0", "end")
+    field.insert("1.0", result)
+def clear():
+    global field_text
+    field_text=""
+    field.delete("1.0", "end")
 
-root= tkinter.Tk()
-root.title("To Do List by @parichay")
+window=tk.Tk()
+window.geometry("300x300")
+field=tk.Text(window,height=2,width=21,background="azure4",font=("Times New Roman",20))
+field.grid(row=1,column=1,columnspan=4)
+3
+#####################################################
+# Number Buttons
+#####################################################
+btn_1=tk.Button(window,text="1",command=lambda: add_to_field(1),bg="azure3",width=5,font=("Times New Roman",14))
+btn_1.grid(row=4,column=1)
 
-#functions for buttons
-def add_task():
-    task =entry_task.get()
-    if task!="":
-        listbox_tasks.insert(tkinter.END,task)
-        entry_task.delete(0,tkinter.END)
-    else:
-        tkinter.messagebox.showwarning(title="Waring!", message="you must enter a message")
+btn_2=tk.Button(window,text="2",command=lambda: add_to_field(2),bg="azure3",width=5,font=("Times New Roman",14))
+btn_2.grid(row=4,column=2)
 
-def delete_task():
-    try:
-        task_index=listbox_tasks.curselection()[0]
-        listbox_tasks.delete(task_index)
-    except:
-        tkinter.messagebox.showwarning(title="Waring!", message="you must select the task")
+btn_3=tk.Button(window,text="3",command=lambda: add_to_field(3),bg="azure3",width=5,font=("Times New Roman",14))
+btn_3.grid(row=4,column=3)
 
+btn_4=tk.Button(window,text="4",command=lambda: add_to_field(4),bg="azure3",width=5,font=("Times New Roman",14))
+btn_4.grid(row=3,column=1)
 
-def load_task():
-    try:
-        tasks=pickle.load(open("tasks.dat","rb"))
-        listbox_tasks.delete(0,tkinter.END)
-        for task in tasks:
-            listbox_tasks.insert(tkinter.END,task)
-    except:
-        tkinter.messagebox.showwarning(title="Waring!", message="Can't find tasks.dat")
+btn_5=tk.Button(window,text="5",command=lambda: add_to_field(5),bg="azure3",width=5,font=("Times New Roman",14))
+btn_5.grid(row=3,column=2)
 
-def save_task():
-    try:
-        tasks=listbox_tasks.get(0,listbox_tasks.size())
-        pickle.dump(tasks,open("tasks.dat","wb"))
-    except:
-        tkinter.messagebox.showwarning(title="Waring!", message="Can't find tasks.dat")
+btn_6=tk.Button(window,text="6",command=lambda: add_to_field(6),bg="azure3",width=5,font=("Times New Roman",14))
+btn_6.grid(row=3,column=3)
 
-def color_task():
-    try:
-        task_index=listbox_tasks.curselection()[0]
-        listbox_tasks.itemconfig(task_index,bg="yellow")
-    except:
-        tkinter.messagebox.showwarning(title="Waring!", message="you must select the task")
+btn_7=tk.Button(window,text="7",command=lambda: add_to_field(7),bg="azure3",width=5,font=("Times New Roman",14))
+btn_7.grid(row=2,column=1)
 
-def delete_color_task():
-    try:
-        task_index=listbox_tasks.curselection()[0]
-        listbox_tasks.itemconfig(task_index,bg="white")
-    except:
-        tkinter.messagebox.showwarning(title="Waring!", message="you must select the task")
+btn_8=tk.Button(window,text="8",command=lambda: add_to_field(8),bg="azure3",width=5,font=("Times New Roman",14))
+btn_8.grid(row=2,column=2)
 
+btn_9=tk.Button(window,text="9",command=lambda: add_to_field(9),bg="azure3",width=5,font=("Times New Roman",14))
+btn_9.grid(row=2,column=3)
 
-#create GUI
-#frames
-frame_task=tkinter.Frame(root)
-frame_task.pack()
-#height and width of block and list box creation
-listbox_tasks=tkinter.Listbox(frame_task,height=19,width=50)
-listbox_tasks.pack(side=tkinter.LEFT)
+btn_0=tk.Button(window,text="0",command=lambda: add_to_field(0),bg="azure3",width=5,font=("Times New Roman",14))
+btn_0.grid(row=5,column=1)
 
-#scrollbar
-scrollbar_tasks=tkinter.Scrollbar(frame_task)
-scrollbar_tasks.pack(side=tkinter.RIGHT,fill=tkinter.Y)
-#scrollbar configuration
-listbox_tasks.config(yscrollcommand=scrollbar_tasks.set)
-scrollbar_tasks.config(command=listbox_tasks.yview)
+#####################################################
+# Operation Buttons
+#####################################################
+btn_plus=tk.Button(window,text="+",command=lambda: add_to_field("+"),bg="azure3",width=5,font=("Times New Roman",14))
+btn_plus.grid(row=4,column=4)
 
-#entry area
-entry_task=tkinter.Entry(root,width=50)
-entry_task.pack()
- 
+btn_minus=tk.Button(window,text="-",command=lambda: add_to_field("-"),bg="azure3",width=5,font=("Times New Roman",14))
+btn_minus.grid(row=5,column=4)
 
-#buttons
-button_add_task= tkinter.Button(root, text="Add Task",width=48, command=add_task )
-button_add_task.pack()
-button_delete_task= tkinter.Button(root, text="Delete Task",width=48, command=delete_task )
-button_delete_task.pack()
-button_load_task= tkinter.Button(root, text="Load Task",width=48, command=load_task )
-button_load_task.pack()
-button_save_task= tkinter.Button(root, text="Save Task",width=48, command=save_task )
-button_save_task.pack()
-button_color_task= tkinter.Button(root, text="Done Task",width=48, command=color_task )
-button_color_task.pack()
-button_delete_color_task= tkinter.Button(root, text="Remove From Done Task",width=48, command=delete_color_task )
-button_delete_color_task.pack()
+btn_times=tk.Button(window,text="*",command=lambda: add_to_field("*"),bg="azure3",width=5,font=("Times New Roman",14))
+btn_times.grid(row=3,column=4)
 
-root.mainloop()
+btn_division=tk.Button(window,text="/",command=lambda: add_to_field("/"),bg="azure3",width=5,font=("Times New Roman",14))
+btn_division.grid(row=2,column=4)
+
+btn_clear=tk.Button(window,text="clear",command=lambda: clear(),bg="azure3",width=5,font=("Times New Roman",14))
+btn_clear.grid(row=5,column=3)
+
+btn_decimal=tk.Button(window,text=".",command=lambda: add_to_field("."),bg="azure3",width=5,font=("Times New Roman",14))
+btn_decimal.grid(row=5,column=2)
+
+btn_open_parenthesis=tk.Button(window,text="(",command=lambda: add_to_field("("),bg="azure3",width=5,font=("Times New Roman",14))
+btn_open_parenthesis.grid(row=6,column=1)
+
+btn_close_parenthesis=tk.Button(window,text=")",command=lambda: add_to_field(")"),bg="azure3",width=5,font=("Times New Roman",14))
+btn_close_parenthesis.grid(row=6,column=2)
+
+btn_equal=tk.Button(window,text="=",command=lambda: calculate(),bg="azure3",width=13,font=("Times New Roman",14))
+btn_equal.grid(row=6,column=3,columnspan=2)
+
+window.mainloop()
